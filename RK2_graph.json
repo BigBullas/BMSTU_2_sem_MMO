@@ -1,0 +1,647 @@
+{
+  "login": "Студент_Граф_СЛ (f7e8d9c0-b1a2-43c5-8d6e-9f0a1b2c3d4e)",
+  "graphState": [
+    {
+      "id": "mv_supervised_learning",
+      "type": "metavertex",
+      "attributes": {
+        "description": {
+          "type": "string",
+          "system": false,
+          "value": "Парадигма машинного обучения с использованием размеченных данных"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Обучение с учителем"
+        }
+      },
+      "edges": [],
+      "children": [
+        "mv_data",
+        "mv_model",
+        "mv_training",
+        "mv_evaluation"
+      ],
+      "parents": []
+    },
+    {
+      "id": "mv_data",
+      "type": "metavertex",
+      "attributes": {
+        "description": {
+          "type": "string",
+          "system": false,
+          "value": "Исходные данные для обучения"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Данные"
+        }
+      },
+      "edges": [
+        "edge_data_to_train",
+        "edge_data_to_test"
+      ],
+      "children": [
+        "vertex_features",
+        "vertex_labels",
+        "vertex_train_set",
+        "vertex_test_set"
+      ],
+      "parents": [
+        "mv_supervised_learning"
+      ]
+    },
+    {
+      "id": "mv_model",
+      "type": "metavertex",
+      "attributes": {
+        "description": {
+          "type": "string",
+          "system": false,
+          "value": "Модель, которая обучается и делает предсказания"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Модель"
+        }
+      },
+      "edges": [
+        "edge_train_to_model",
+        "edge_model_to_loss"
+      ],
+      "children": [
+        "vertex_algorithm",
+        "vertex_parameters",
+        "vertex_hyperparams"
+      ],
+      "parents": [
+        "mv_supervised_learning"
+      ]
+    },
+    {
+      "id": "mv_training",
+      "type": "metavertex",
+      "attributes": {
+        "description": {
+          "type": "string",
+          "system": false,
+          "value": "Процесс настройки модели"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Обучение"
+        }
+      },
+      "edges": [
+        "edge_optimizer_to_params"
+      ],
+      "children": [
+        "vertex_loss_function",
+        "vertex_optimizer",
+        "vertex_epochs"
+      ],
+      "parents": [
+        "mv_supervised_learning"
+      ]
+    },
+    {
+      "id": "mv_evaluation",
+      "type": "metavertex",
+      "attributes": {
+        "description": {
+          "type": "string",
+          "system": false,
+          "value": "Оценка качества модели на тестовых данных"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Оценка"
+        }
+      },
+      "edges": [
+        "edge_test_to_metrics"
+      ],
+      "children": [
+        "vertex_accuracy",
+        "vertex_precision",
+        "vertex_recall",
+        "vertex_f1",
+        "vertex_mse"
+      ],
+      "parents": [
+        "mv_supervised_learning"
+      ]
+    },
+    {
+      "id": "vertex_features",
+      "type": "vertex",
+      "attributes": {
+        "type": {
+          "type": "string",
+          "system": false,
+          "value": "числовые / категориальные"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Признаки"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [
+        "mv_data"
+      ]
+    },
+    {
+      "id": "vertex_labels",
+      "type": "vertex",
+      "attributes": {
+        "type": {
+          "type": "string",
+          "system": false,
+          "value": "целевая переменная"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Метки"
+        }
+      },
+      "edges": [
+        "edge_labels_to_eval"
+      ],
+      "children": [],
+      "parents": [
+        "mv_data"
+      ]
+    },
+    {
+      "id": "vertex_train_set",
+      "type": "vertex",
+      "attributes": {
+        "share": {
+          "type": "float",
+          "system": false,
+          "value": 0.7
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Обучающий набор"
+        }
+      },
+      "edges": [
+        "edge_data_to_train"
+      ],
+      "children": [],
+      "parents": [
+        "mv_data"
+      ]
+    },
+    {
+      "id": "vertex_test_set",
+      "type": "vertex",
+      "attributes": {
+        "share": {
+          "type": "float",
+          "system": false,
+          "value": 0.3
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Тестовый набор"
+        }
+      },
+      "edges": [
+        "edge_data_to_test",
+        "edge_test_to_metrics"
+      ],
+      "children": [],
+      "parents": [
+        "mv_data"
+      ]
+    },
+    {
+      "id": "vertex_algorithm",
+      "type": "vertex",
+      "attributes": {
+        "examples": {
+          "type": "string",
+          "system": false,
+          "value": "линейная регрессия, SVM, нейронные сети"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Алгоритм"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [
+        "mv_model"
+      ]
+    },
+    {
+      "id": "vertex_parameters",
+      "type": "vertex",
+      "attributes": {
+        "learned": {
+          "type": "boolean",
+          "system": false,
+          "value": true
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Параметры"
+        }
+      },
+      "edges": [
+        "edge_optimizer_to_params"
+      ],
+      "children": [],
+      "parents": [
+        "mv_model"
+      ]
+    },
+    {
+      "id": "vertex_hyperparams",
+      "type": "vertex",
+      "attributes": {
+        "learned": {
+          "type": "boolean",
+          "system": false,
+          "value": false
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Гиперпараметры"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [
+        "mv_model"
+      ]
+    },
+    {
+      "id": "vertex_loss_function",
+      "type": "vertex",
+      "attributes": {
+        "example": {
+          "type": "string",
+          "system": false,
+          "value": "MSE, cross-entropy"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Функция потерь"
+        }
+      },
+      "edges": [
+        "edge_model_to_loss"
+      ],
+      "children": [],
+      "parents": [
+        "mv_training"
+      ]
+    },
+    {
+      "id": "vertex_optimizer",
+      "type": "vertex",
+      "attributes": {
+        "example": {
+          "type": "string",
+          "system": false,
+          "value": "SGD, Adam"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Оптимизатор"
+        }
+      },
+      "edges": [
+        "edge_optimizer_to_params"
+      ],
+      "children": [],
+      "parents": [
+        "mv_training"
+      ]
+    },
+    {
+      "id": "vertex_epochs",
+      "type": "vertex",
+      "attributes": {
+        "count": {
+          "type": "int",
+          "system": false,
+          "value": 100
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Эпохи"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [
+        "mv_training"
+      ]
+    },
+    {
+      "id": "vertex_accuracy",
+      "type": "vertex",
+      "attributes": {
+        "task": {
+          "type": "string",
+          "system": false,
+          "value": "классификация"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Точность (Accuracy)"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [
+        "mv_evaluation"
+      ]
+    },
+    {
+      "id": "vertex_precision",
+      "type": "vertex",
+      "attributes": {
+        "task": {
+          "type": "string",
+          "system": false,
+          "value": "классификация"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Полнота (Precision)"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [
+        "mv_evaluation"
+      ]
+    },
+    {
+      "id": "vertex_recall",
+      "type": "vertex",
+      "attributes": {
+        "task": {
+          "type": "string",
+          "system": false,
+          "value": "классификация"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Полнота (Recall)"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [
+        "mv_evaluation"
+      ]
+    },
+    {
+      "id": "vertex_f1",
+      "type": "vertex",
+      "attributes": {
+        "task": {
+          "type": "string",
+          "system": false,
+          "value": "классификация"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "F1-мера"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [
+        "mv_evaluation"
+      ]
+    },
+    {
+      "id": "vertex_mse",
+      "type": "vertex",
+      "attributes": {
+        "task": {
+          "type": "string",
+          "system": false,
+          "value": "регрессия"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "Среднеквадратичная ошибка (MSE)"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [
+        "mv_evaluation"
+      ]
+    },
+    {
+      "id": "edge_data_to_train",
+      "type": "edge",
+      "attributes": {
+        "relation": {
+          "type": "string",
+          "system": false,
+          "value": "разделение"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "разделяется на"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [],
+      "source": "mv_data",
+      "target": "vertex_train_set",
+      "directed": true
+    },
+    {
+      "id": "edge_data_to_test",
+      "type": "edge",
+      "attributes": {
+        "relation": {
+          "type": "string",
+          "system": false,
+          "value": "разделение"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "разделяется на"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [],
+      "source": "mv_data",
+      "target": "vertex_test_set",
+      "directed": true
+    },
+    {
+      "id": "edge_train_to_model",
+      "type": "edge",
+      "attributes": {
+        "relation": {
+          "type": "string",
+          "system": false,
+          "value": "настройка"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "обучает"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [],
+      "source": "vertex_train_set",
+      "target": "mv_model",
+      "directed": true
+    },
+    {
+      "id": "edge_model_to_loss",
+      "type": "edge",
+      "attributes": {
+        "relation": {
+          "type": "string",
+          "system": false,
+          "value": "ошибка"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "вычисляет"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [],
+      "source": "mv_model",
+      "target": "vertex_loss_function",
+      "directed": true
+    },
+    {
+      "id": "edge_optimizer_to_params",
+      "type": "edge",
+      "attributes": {
+        "relation": {
+          "type": "string",
+          "system": false,
+          "value": "обновление"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "обновляет"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [],
+      "source": "vertex_optimizer",
+      "target": "vertex_parameters",
+      "directed": true
+    },
+    {
+      "id": "edge_test_to_metrics",
+      "type": "edge",
+      "attributes": {
+        "relation": {
+          "type": "string",
+          "system": false,
+          "value": "оценка"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "оценивается по"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [],
+      "source": "vertex_test_set",
+      "target": "mv_evaluation",
+      "directed": true
+    },
+    {
+      "id": "edge_labels_to_eval",
+      "type": "edge",
+      "attributes": {
+        "relation": {
+          "type": "string",
+          "system": false,
+          "value": "сравнение"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "сравниваются с предсказаниями"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [],
+      "source": "vertex_labels",
+      "target": "mv_evaluation",
+      "directed": true
+    },
+    {
+      "id": "metaedge_model_training",
+      "type": "metaedge",
+      "attributes": {
+        "description": {
+          "type": "string",
+          "system": false,
+          "value": "Модель настраивается в процессе обучения"
+        },
+        "name": {
+          "type": "string",
+          "system": false,
+          "value": "настраивается"
+        }
+      },
+      "edges": [],
+      "children": [],
+      "parents": [],
+      "source": "mv_model",
+      "target": "mv_training",
+      "directed": true
+    }
+  ],
+  "actionLog": []
+}
